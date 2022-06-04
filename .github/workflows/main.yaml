@@ -11,20 +11,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Set environment variable 1
+      - name: Set output value 1
+        id: first
         shell: bash
         run: |
-          echo "VAR1='This is the value from the step 1'" >> $GITHUB_ENV
+          value1='This is the first value'
 
-      - name: Set environment variable 2
+          echo "::set-output name=first_value::$value1"
+
+      - name: Set output value 2
+        id: second
         shell: pwsh
         run: |
-          echo "VAR2='This is the value from the step 2'" | `
-            Out-File -FilePath $env:GITHUB_ENV -Encoding UTF-8 -Append
+          $value2='This is the second value'
 
-      - name: Check envronment variables
+          echo "::set-output name=second_value::$value2"
+
+      - name: Check output values
         shell: bash
         run: |
-          echo "preset value: ${{ env.PRESET_VALUE}}"
-          echo "value 1: $VAR1"
-          echo "value 2: $VAR2"
+          echo "first value: ${{ steps.first.outputs.first_value }}"
+          echo "second value: ${{ steps.second.outputs.second_value }}"
