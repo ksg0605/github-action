@@ -1,6 +1,6 @@
 name: "My First GitHub Actions"
 
-on: push
+on: ["push", "pull_request"]
 
 env:
   PRESET_VALUE: "This is the value preset"
@@ -8,6 +8,7 @@ env:
 jobs:
   first_job:
     name: "First Job"
+    if: github.event_name == 'push'
 
     strategy:
       matrix:
@@ -27,3 +28,30 @@ jobs:
         run: |
           echo "Hello, from ${{ matrix.os }}"
           echo "node version: $(node --version)"
+
+      - name:
+
+  second_job:
+    name: "First Job"
+    if: github.event_name == 'pull_request'
+
+    strategy:
+      matrix:
+        os: ["windows-latest", "macos-latest", "ubuntu-latest"]
+        nodejs: ["14.x", "16.x"]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Choose node.js version
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.nodejs }}
+
+      - name: Say Hello World from ${{ matrix.os }}
+        shell: bash
+        run: |
+          echo "Hello, from ${{ matrix.os }}"
+          echo "node version: $(node --version)"
+
+      - name:
