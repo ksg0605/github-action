@@ -26,4 +26,4 @@ jobs:
         shell: bash
         run: |
           echo "Hello, from ${{ matrix.os }}"
-          echo "node version: $(node --version"
+          echo "node version: $(node --version)"
