@@ -44,6 +44,7 @@ jobs:
         with:
           name: apiapp
           path: api/bin/published
+
   release:
     name: "Release app"
     needs: build
@@ -59,13 +60,12 @@ jobs:
       - name: Zip artifact
         shell: bash
         run: |
-          pushed artifacts/api
+          pushd artifacts/api
           zip -qq -r apiapp.zip .
           popd
-
-          mv artifact/api/api.zip artifacts/apiapp.zip
+          mv artifacts/api/apiapp.zip artifacts/apiapp.zip
       - name: Release artifact to GitHub
-        uses: marvinpinto/action-automatic-release@latest
+        uses: marvinpinto/action-automatic-releases@latest
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           prerelease: false
