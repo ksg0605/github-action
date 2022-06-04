@@ -18,12 +18,11 @@ jobs:
         shell: bash
         run: |
           echo "Hello World from Step #1"
-      - name: "Say Lorem Ipsum 1"
+      - name: "Say Lorem Ipsum 2"
         shell: pwsh
         run: |
-          Write-Output "Lorem Ipsum from Step #2"
-          echo "Lorem ipsum from Step #2"
-      - name: "Check environment variable 1"
+          echo "Lorem Ipsum from Step #2"
+      - name: Check environment variable 1
         shell: bash
         env:
           STEP_LEVEL_1: "This environment variable comes from the step level 1"
@@ -31,7 +30,6 @@ jobs:
           echo "workflow level: $WORKFLOW_LEVEL"
           echo "job level: $JOB_LEVEL_1"
           echo "step level: $STEP_LEVEL_1"
-
 second_job:
   name: "Second Job"
   runs-on: ubuntu-latest
@@ -47,9 +45,8 @@ second_job:
     - name: "Say Lorem Ipsum 2"
       shell: pwsh
       run: |
-        Write-Output "Lorem Ipsum from Step #2"
-        echo "Lorem ipsum from Step #2"
-    - name: "Check environment variable 1"
+        echo "Lorem Ipsum from Step #2"
+    - name: Check environment variable 1
       shell: bash
       env:
         STEP_LEVEL_1: "This environment variable comes from the step level 1"
@@ -59,14 +56,13 @@ second_job:
         echo "job level: $JOB_LEVEL_2"
         echo "step level: $STEP_LEVEL_1"
         echo "step level: $STEP_LEVEL_2"
-
-    - name: "Check environment variable 2"
-      shell: bash
+    - name: Check environment variable 2
+      shell: pwsh
       env:
         STEP_LEVEL_2: "This environment variable comes from the step level 2"
       run: |
-        echo "workflow level: $WORKFLOW_LEVEL"
+        echo "workflow level: $env:WORKFLOW_LEVEL"
         echo "job level: $JOB_LEVEL_1"
-        echo "job level: $JOB_LEVEL_2"
+        echo "job level: ${{env.JOB_LEVEL_2}}"
         echo "step level: $STEP_LEVEL_1"
         echo "step level: $STEP_LEVEL_2"
