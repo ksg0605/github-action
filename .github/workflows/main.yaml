@@ -32,7 +32,7 @@ jobs:
       - name:
 
   second_job:
-    name: "First Job"
+    name: "Second Job"
     if: github.event_name == 'pull_request'
 
     strategy:
